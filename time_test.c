@@ -3,7 +3,7 @@
 
 int main(int argc, char const *argv[])
 {
-    __attribute__((unused)) int N = 400000000;
+    __attribute__((unused)) int N = 1e9;
     double pi = 0.0;
 
 #if defined(BASELINE)
@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
 #if defined(AVXUNROLL)
     pi = compute_pi_avx_unroll(N);
 #endif
-    printf("N = %d , pi = %lf\n", N, pi);
+    printf("N = %d , pi = %.10lf\n", N, pi);
 
     return 0;
 }
