@@ -1,5 +1,4 @@
 set logscale x 10
-set width 5
 set grid
 set title "time_compare"
 set term png  enhanced font 'Verdana,10'

@@ -26,11 +26,11 @@ int main(int argc, char const *argv[])
     pi = compute_pi_avx_unroll(N);
 #endif
 
-#if defined(Leibniz)
+#if defined(LEIBNIZ)
     pi = compute_pi_Leibniz(N);
 #endif
 
-#if defined(Leibniz_avx)
+#if defined(LEIBNIZAVX)
     pi = compute_pi_Leibniz(N);
 #endif
 
