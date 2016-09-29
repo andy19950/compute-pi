@@ -62,6 +62,25 @@ int main(int argc, char const *argv[])
         compute_pi_avx_unroll(N);
     }
     clock_gettime(CLOCK_ID, &end);
+    printf("%.4f ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+
+    // Leibniz formula
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_Leibniz(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%.4f ", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+    // Leibniz using AVX SIMD
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_Leibniz_avx(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
     printf("%.4f\n", (double) (end.tv_sec - start.tv_sec) +
            (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 

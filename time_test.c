@@ -25,6 +25,15 @@ int main(int argc, char const *argv[])
 #if defined(AVXUNROLL)
     pi = compute_pi_avx_unroll(N);
 #endif
+
+#if defined(Leibniz)
+    pi = compute_pi_Leibniz(N);
+#endif
+
+#if defined(Leibniz_avx)
+    pi = compute_pi_Leibniz(N);
+#endif
+
     printf("N = %d , pi = %.10lf\n", N, pi);
 
     return 0;
