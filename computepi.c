@@ -117,3 +117,37 @@ double compute_pi_avx_unroll(size_t N)
           tmp4[0] + tmp4[1] + tmp4[2] + tmp4[3];
     return pi * 4.0;
 }
+
+double compute_pi_Leibniz(size_t N)
+{
+    double pi = 0.0;
+    double x;
+    for (size_t n = 0; n < N; n++) {
+        int temp = (n % 2) ? -1 : 1;
+        x = (double) temp / (2 * n + 1);
+        pi += x;
+    }
+    return pi * 4.0;
+}
+
+double compute_pi_Leibniz_avx(size_t N)
+{
+    double pi = 0.0;
+    register __m256d ymm0, ymm1, ymm2, ymm3, ymm4;
+    ymm0 = _mm256_set_pd(1.0,-1.0,1.0,-1.0);
+    ymm1 = _mm256_set1_pd(2.0);
+    ymm2 = _mm256_set1_pd(1.0);
+    ymm4 = _mm256_setzero_pd();
+
+    for (int i = 0; i <= N - 4; i += 4) {
+	ymm3 = _mm256_set_pd(i, i+1.0, i+2.0, i+3.0);
+	ymm3 = _mm256_mul_pd(ymm1,ymm3);
+	ymm3 = _mm256_add_pd(ymm3,ymm2);
+	ymm3 = _mm256_div_pd(ymm0,ymm3);
+	ymm4 = _mm256_add_pd(ymm3,ymm4);		 
+    }
+    double tmp[4] __attribute__((aligned(32)));
+    _mm256_store_pd(tmp, ymm4);
+    pi += tmp[0] + tmp[1] + tmp[2] + tmp[3];
+    return pi * 4.0;
+}
