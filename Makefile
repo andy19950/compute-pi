@@ -11,6 +11,8 @@ default: computepi.o
 	$(CC) $(CFLAGS) computepi.o time_test.c -DOPENMP_4 -o time_test_openmp_4
 	$(CC) $(CFLAGS) computepi.o time_test.c -DAVX -o time_test_avx
 	$(CC) $(CFLAGS) computepi.o time_test.c -DAVXUNROLL -o time_test_avxunroll
+	$(CC) $(CFLAGS) computepi.o time_test.c -DBASELINE -o time_test_Leibniz
+	$(CC) $(CFLAGS) computepi.o time_test.c -DAVX -o time_test_Leibniz_avx
 	$(CC) $(CFLAGS) computepi.o benchmark_clock_gettime.c -o benchmark_clock_gettime
 
 .PHONY: clean default
@@ -24,10 +26,12 @@ check: default
 	time ./time_test_openmp_4
 	time ./time_test_avx
 	time ./time_test_avxunroll
+	time ./time_test_Leibniz
+	time ./time_test_Leibniz_avx
 
 gencsv: default
-	for i in `seq 100 5000 25000`; do \
-		printf "%d," $$i;\
+	for i in `seq 1000 1000 50000`; do \
+		printf "%d " $$i;\
 		./benchmark_clock_gettime $$i; \
 	done > result_clock_gettime.csv
 	gnuplot scripts/runtime.gp
