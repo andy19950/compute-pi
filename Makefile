@@ -27,6 +27,7 @@ check: default
 
 gencsv: default
 	for i in `seq 100 5000 25000`; do \
+		printf "%d," $$i;\
 		./benchmark_clock_gettime $$i; \
 	done > result_clock_gettime.csv
 	gnuplot scripts/runtime.gp

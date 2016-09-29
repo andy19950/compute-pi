@@ -1,17 +1,14 @@
-reset
-set ylabel 'time(ms)'
-set style fill solid
-set title 'perfomance comparison'
-set term png enhanced font 'Verdana,10'
-set output 'runtime.png'
+set logscale x 2
+set grid
+set title "time_compare"
+set term png
+set output "runtime.png"
+set xlabel "N"
+set ylabel "time(sec)"
 
-plot [:][:.005]'result_clock_gettime.csv' using 2:xtic(1) with histogram title 'baseline', \
-'' using ($0-0.1):($1):2 with labels title ' ', \
-'' using 3:xtic(1) with histogram title 'OpenMP_2'  , \
-'' using ($0+0.1):($2):3 with labels title ' ', \
-'' using 4:xtic(1) with histogram title 'OpenMP_4' , \
-'' using ($0+0.4):($3):4 with labels title ' ', \
-'' using 5:xtic(1) with histogram title 'AVX_SIMP' , \
-'' using ($0+0.6):($4):5 with labels title ' ', \
-'' using 6:xtic(1) with histogram title 'AVX_unrolling' , \
-'' using ($0+0.8):($5):6 with labels title ' '
+plot "result_clock_gettime.csv" using 1:2 with lines title 'baseline', \
+'' using 1:3 with lines title 'omp_2', \
+'' using 1:4 with lines title 'omp_4', \
+'' using 1:5 with lines title 'avx', \
+'' using 1:6 with lines title 'avxunroll'
+
